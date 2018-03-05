@@ -1,8 +1,6 @@
 package edu.knoldus.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -11,8 +9,6 @@ import java.util.stream.Stream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.counting;
@@ -73,7 +69,7 @@ public class Operations {
         try (final Stream<String> lines = Files.lines(Paths.get(filePath))) {
 
             Map<String, Integer> map = lines.map(line -> line.split("[\\s]+"))
-                    .flatMap(Arrays::stream).collect(groupingBy(Function.identity(), summingInt(e -> 1)));
+                    .flatMap(Arrays::stream).collect(groupingBy(Function.identity(), summingInt(number -> 1)));
             System.out.println(map);
         }
     }
@@ -89,9 +85,14 @@ public class Operations {
         String[] words = sentence.split("\\s+");
         Stream<String> wordsStream = Stream.of(words);
         Map<String, Long> wordCount = wordsStream.map(String::toLowerCase).collect(groupingBy(word -> word, counting()));
-        List<Object> listToAdd = Arrays.asList(wordCount);
-        System.out.println(listToAdd);
-
+        /*List<Object> listToAdd = Arrays.asList(wordCount);
+        System.out.println(listToAdd);*/
+        System.out.println("word count of a sentence:");
+        List<List<Object>> wordFrequencyList = new LinkedList<>();
+        wordCount.forEach((key, value) -> {
+            wordFrequencyList.add(Arrays.asList(key, value));
+        });
+        System.out.println(wordFrequencyList);
     }
 
     /**
@@ -103,7 +104,7 @@ public class Operations {
      */
     public void getListMultiplication(List<Integer> list1, List<Integer> list2) {
         if (list1.size() == list2.size()) {
-            System.out.println("word count of a sentence:");
+            System.out.println("multiplication result of both lists:");
             IntStream.range(0, list1.size())
                     .map(position -> list1.get(position) * list2.get(position)).forEach(System.out::println);
         } else {
