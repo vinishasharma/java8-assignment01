@@ -15,7 +15,6 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
-
 public class Operations {
 
     /**
@@ -85,8 +84,6 @@ public class Operations {
         String[] words = sentence.split("\\s+");
         Stream<String> wordsStream = Stream.of(words);
         Map<String, Long> wordCount = wordsStream.map(String::toLowerCase).collect(groupingBy(word -> word, counting()));
-        /*List<Object> listToAdd = Arrays.asList(wordCount);
-        System.out.println(listToAdd);*/
         System.out.println("word count of a sentence:");
         List<List<Object>> wordFrequencyList = new LinkedList<>();
         wordCount.forEach((key, value) -> {
